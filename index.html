@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Felix6375 – Persönliche Startseite</title>
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --fg: #222;
+      --accent: #0057b8;
+      --card-bg: #fff;
+      --border: #ddd;
+      --shadow: 0 2px 8px rgba(0,0,0,0.04);
+      --radius: 8px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      line-height: 1.6;
+    }
+    header {
+      padding: 2rem 1rem 1rem 1rem;
+      text-align: center;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      color: var(--accent);
+      font-size: 2.2rem;
+      letter-spacing: 0.02em;
+    }
+    main {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-top: 0.5rem;
+    }
+    th, td {
+      padding: 0.6rem 0.4rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--bg);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    figure {
+      margin: 0;
+      text-align: center;
+    }
+    figure img {
+      max-width: 180px;
+      width: 100%;
+      border-radius: 50%;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--accent);
+      background: #fff;
+    }
+    figcaption {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #555;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover, .card:focus-within {
+      box-shadow: 0 4px 16px rgba(0,87,184,0.10);
+      border-color: var(--accent);
+    }
+    .card img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      background: #eee;
+    }
+    .card h3 {
+      margin: 0.5rem 0 0.3rem 0;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    .card p {
+      margin: 0;
+      font-size: 0.98rem;
+      color: #444;
+    }
+    .card a {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      outline: none;
+    }
+    .card a:focus {
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    @media (max-width: 720px) {
+      main {
+        margin: 1rem auto;
+      }
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Felix6375</h1>
+    <p>Hallo! Ich bin Felix, Geoinformatik-Student mit Begeisterung für Karten, Daten und die Schnittstelle von Technologie und Umwelt. Mein Weg führt mich durch spannende Projekte und Orte – hier findest du einen kleinen Einblick.</p>
+    <p>In meiner Freizeit bin ich gerne draußen unterwegs, fotografiere und entdecke neue Perspektiven. Diese Seite zeigt meine Stationen, Interessen und Links zu meinen Projekten.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Kurz-CV</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Jahr</th>
+            <th>Station</th>
+            <th>Ort</th>
+            <th>Stichwort</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024</td>
+            <td>Bachelorarbeit</td>
+            <td>Dresden</td>
+            <td>Fernerkundung</td>
+          </tr>
+          <tr>
+            <td>2023</td>
+            <td>Praktikum</td>
+            <td>Berlin</td>
+            <td>Geoinformatik</td>
+          </tr>
+          <tr>
+            <td>2022</td>
+            <td>Projekt</td>
+            <td>Leipzig</td>
+            <td>Datenanalyse</td>
+          </tr>
+          <tr>
+            <td>2021</td>
+            <td>Workshop</td>
+            <td>Wien</td>
+            <td>GIS</td>
+          </tr>
+          <tr>
+            <td>2020</td>
+            <td>Konferenz</td>
+            <td>Amsterdam</td>
+            <td>Kartografie</td>
+          </tr>
+          <tr>
+            <td>2019</td>
+            <td>Schüleraustausch</td>
+            <td>Stockholm</td>
+            <td>Kultur</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Über mich</h2>
+      <figure>
+        <img src="assets/me.jpg" alt="Felix draußen in der Natur" />
+        <figcaption>Felix unterwegs – Inspiration finde ich draußen.</figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Galerie</h2>
+      <div class="gallery">
+        <div class="card">
+          <a href="https://github.com/Felix6375" target="_blank" rel="noopener" aria-label="Zu meinem GitHub-Profil">
+            <img src="assets/github.png" alt="GitHub Logo" />
+            <h3>GitHub</h3>
+            <p>Meine Projekte und Beiträge im Überblick.</p>
+          </a>
+        </div>
+        <div class="card">
+          <a href="https://portfolio.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Portfolio">
+            <img src="assets/portfolio.png" alt="Portfolio Icon" />
+            <h3>Portfolio</h3>
+            <p>Ausgewählte Arbeiten und kreative Projekte.</p>
+          </a>
+        </div>
+        <div class="card">
+          <a href="https://photoblog.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Fotoblog">
+            <img src="assets/photo-blog.png" alt="Fotoblog Icon" />
+            <h3>Fotoblog</h3>
+            <p>Fotografie und Abenteuer aus meiner Sicht.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
