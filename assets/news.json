@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2025-10-14",
+    "title": "Interpreting core forms of urban morphology with CoMo (2025)",
+    "excerpt": "New paper on explainable graph neural networks for urban morphology (Computers, Environment and Urban Systems).",
+    "img": "Natur.jpg"
+  },
+  {
+    "date": "2024-10-01",
+    "title": "Walking in the Shade: Shadow-oriented Navigation (2024)",
+    "excerpt": "Shadow-oriented navigation system that optimizes pedestrian routes for shade and comfort (ACM GIS 2024).",
+    "img": "Natur.jpg"
+  },
+  {
+    "date": "2023-06-12",
+    "title": "Open Data Workshop",
+    "excerpt": "Workshop on publishing and working with open geospatial data.",
+    "img": "Natur.jpg"
+  },
+  {
+    "date": "2022-11-03",
+    "title": "Student Project Showcase",
+    "excerpt": "Highlights from student projects in geoinformatics and mapping.",
+    "img": "Natur.jpg"
+  },
+  {
+    "date": "2022-04-20",
+    "title": "Mapathon Recap",
+    "excerpt": "Community event: collaborative mapping for disaster response.",
+    "img": "Natur.jpg"
+  },
+  {
+    "date": "2021-09-10",
+    "title": "New Course: WebGIS Basics",
+    "excerpt": "Introductory course on WebGIS technologies and practical exercises.",
+    "img": "Natur.jpg"
+  }
+]
