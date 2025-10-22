@@ -261,6 +261,7 @@
     @media (max-width: 920px) {
       .gallery { grid-template-columns: repeat(2, 1fr); }
       .map-card { height: 260px; }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 720px) {
       main { margin: 1rem auto; }
@@ -271,7 +272,29 @@
       .profile-card { justify-self: start; }
       .profile-card img { width: 120px; height: 120px; }
     }
+
+    /* Projects grid (3 maps) */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      padding: 0.6rem;
+    }
+    .map-container {
+      width: 100%;
+      height: 220px;
+      border-radius: 6px;
+    }
   </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 </head>
 <body>
   <header>
@@ -343,28 +366,10 @@
           </div>
         </div>
         <div id="panel-projects" class="tab-panel" role="tabpanel" aria-labelledby="tab-projects" aria-hidden="true">
-          <div class="gallery">
-            <div class="card">
-              <a href="https://github.com/Felix6375" target="_blank" rel="noopener" aria-label="Zu meinem GitHub-Profil">
-                <img src="assets/github.png" alt="GitHub Logo" />
-                <h3>GitHub</h3>
-                <p>Meine Projekte und Beiträge im Überblick.</p>
-              </a>
-            </div>
-            <div class="card">
-              <a href="https://portfolio.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Portfolio">
-                <img src="assets/portfolio.png" alt="Portfolio Icon" />
-                <h3>Portfolio</h3>
-                <p>Ausgewählte Arbeiten und kreative Projekte.</p>
-              </a>
-            </div>
-            <div class="card">
-              <a href="https://photoblog.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Fotoblog">
-                <img src="assets/photo-blog.png" alt="Fotoblog Icon" />
-                <h3>Fotoblog</h3>
-                <p>Fotografie und Abenteuer aus meiner Sicht.</p>
-              </a>
-            </div>
+          <div class="projects-grid">
+            <div class="project-card"><div id="map1" class="map-container"></div></div>
+            <div class="project-card"><div id="map2" class="map-container"></div></div>
+            <div class="project-card"><div id="map3" class="map-container"></div></div>
           </div>
         </div>
         <div id="panel-links" class="tab-panel" role="tabpanel" aria-labelledby="tab-links" aria-hidden="true">
@@ -434,6 +439,22 @@
       });
       // initialise indicator position (if you want visual indicator later)
       select(0);
+    })();
+  </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    // init 3 small Leaflet maps
+    (function(){
+      try{
+        const opts = { center: [51.1657, 10.4515], zoom: 5 };
+        const m1 = L.map('map1', { scrollWheelZoom:false, zoomControl:true }).setView(opts.center, opts.zoom);
+        const m2 = L.map('map2', { scrollWheelZoom:false, zoomControl:true }).setView(opts.center, opts.zoom);
+        const m3 = L.map('map3', { scrollWheelZoom:false, zoomControl:true }).setView(opts.center, opts.zoom);
+        const tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' });
+        tile.addTo(m1); tile.addTo(m2); tile.addTo(m3);
+        // ensure maps resize when tab becomes visible
+        document.querySelectorAll('.tab').forEach(btn=> btn.addEventListener('click', ()=> setTimeout(()=>{ m1.invalidateSize(); m2.invalidateSize(); m3.invalidateSize(); }, 250)));
+      }catch(e){ console.warn('Leaflet init failed', e); }
     })();
   </script>
 </body>
