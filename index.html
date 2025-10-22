@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -15,7 +14,24 @@
       --shadow: 0 2px 8px rgba(0,0,0,0.04);
       --radius: 8px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --glass: rgba(255,255,255,0.7);
+      --muted: #6b7280;
+      --accent-2: #0a74ff;
+      transition: background-color 0.25s, color 0.25s;
     }
+    /* Dark theme variables */
+    [data-theme="dark"] {
+      --bg: #0b1020;
+      --fg: #e6eef8;
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      --border: rgba(255,255,255,0.06);
+      --shadow: 0 6px 20px rgba(2,6,23,0.6);
+      --accent: #66b0ff;
+      --glass: rgba(255,255,255,0.03);
+      --muted: #9aa7bf;
+      --accent-2: #8fc7ff;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -23,68 +39,116 @@
       color: var(--fg);
       font-family: var(--font);
       line-height: 1.6;
+      transition: background 0.25s ease, color 0.25s ease;
     }
+
     header {
-      padding: 2rem 1rem 1rem 1rem;
+      padding: 1.6rem 1rem 1rem 1rem;
       text-align: center;
       background: var(--card-bg);
       box-shadow: var(--shadow);
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(6px);
+    }
+    header .top-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 920px;
+      margin: 0 auto;
+      width: 100%;
     }
     header h1 {
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.25rem 0;
       color: var(--accent);
-      font-size: 2.2rem;
+      font-size: 1.6rem;
       letter-spacing: 0.02em;
     }
+    header p.small {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Theme toggle button */
+    #theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.6rem;
+      border-radius: 999px;
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      cursor: pointer;
+      color: var(--fg);
+      transition: background 0.18s, border-color 0.18s, transform 0.12s;
+    }
+    #theme-toggle:hover { transform: translateY(-2px); }
+    #theme-toggle svg { width: 18px; height: 18px; display: block; }
+
     main {
-      max-width: 720px;
-      margin: 2rem auto;
+      max-width: 920px;
+      margin: 1.6rem auto;
       padding: 0 1rem;
     }
-    section {
-      margin-bottom: 2rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--card-bg);
+    section { margin-bottom: 2rem; }
+    /* Tabs */    .tabs {
+      background: transparent;
       border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      margin-top: 0.5rem;
     }
-    th, td {
-      padding: 0.6rem 0.4rem;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
+    .tab-list {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.4rem;
+      margin-bottom: 1rem;
+      background: transparent;
     }
-    th {
-      background: var(--bg);
-      color: var(--accent);
+    .tab {
+      background: transparent;
+      border: none;
+      padding: 0.65rem 0.9rem;
+      border-radius: 999px;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
       font-weight: 600;
+      transition: color 0.18s, transform 0.12s;
+      outline: none;
     }
-    tr:last-child td {
-      border-bottom: none;
-    }
-    figure {
-      margin: 0;
-      text-align: center;
-    }
-    figure img {
-      max-width: 180px;
-      width: 100%;
-      border-radius: 50%;
+    .tab:focus { box-shadow: 0 0 0 3px rgba(10,116,255,0.12); }
+    .tab[aria-selected="true"] {
+      color: var(--accent-2);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid var(--border);
+      transform: translateY(-2px);
       box-shadow: var(--shadow);
-      border: 2px solid var(--accent);
-      background: #fff;
     }
-    figcaption {
-      margin-top: 0.5rem;
-      font-size: 1rem;
-      color: #555;
+    .tab-indicator {
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 3px;
+      transition: transform 0.25s cubic-bezier(.2,.9,.2,1), width 0.25s;
     }
-    .gallery {
+    .tab-panels {
+      min-height: 120px;
+    }
+    .tab-panel {
+      display: none;
+      animation: fadeInUp 300ms ease both;
+      padding: 0.6rem 0;
+    }
+    .tab-panel[aria-hidden="false"] { display: block; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards (gallery) */    .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.2rem;
@@ -97,57 +161,134 @@
       border: 1px solid var(--border);
       padding: 1rem;
       text-align: center;
-      transition: box-shadow 0.2s;
+      transition: box-shadow 0.2s, transform 0.18s;
+      will-change: transform;
     }
     .card:hover, .card:focus-within {
-      box-shadow: 0 4px 16px rgba(0,87,184,0.10);
-      border-color: var(--accent);
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 8px 28px rgba(2,6,23,0.12);
+      border-color: var(--accent-2);
     }
-    .card img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      margin-bottom: 0.5rem;
-      border-radius: 8px;
-      background: #eee;
+    .card img { width: 48px; height: 48px; object-fit: contain; margin-bottom: 0.5rem; border-radius: 8px; background: #eee; }
+    .card h3 { margin: 0.5rem 0 0.3rem 0; color: var(--accent); font-size: 1.05rem; }
+    .card p { margin: 0; font-size: 0.98rem; color: var(--muted); }
+
+    /* Map placeholder styling */    .map-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      height: 340px;
+      background: linear-gradient(180deg, rgba(0,87,184,0.06), rgba(0,0,0,0.02));
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .card h3 {
-      margin: 0.5rem 0 0.3rem 0;
+    .map-card .placeholder {
+      width: 100%;
+      height: 100%;
+      background-image: url('Natur.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: saturate(0.9) contrast(0.95) brightness(0.95);
+    }
+
+    /* About (first tab) layout */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .about-text h3 {
+      margin: 0 0 0.5rem 0;
       color: var(--accent);
-      font-size: 1.1rem;
+      font-size: 1.25rem;
     }
-    .card p {
-      margin: 0;
-      font-size: 0.98rem;
-      color: #444;
+    .about-text p {
+      color: var(--muted);
+      margin: 0 0 0.75rem 0;
     }
-    .card a {
-      display: block;
-      color: inherit;
-      text-decoration: none;
-      outline: none;
+    .profile-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.6rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .card a:focus {
-      box-shadow: 0 0 0 2px var(--accent);
+    .profile-card img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 4px solid rgba(255,255,255,0.6);
+      box-shadow: 0 12px 30px rgba(2,6,23,0.08);
+    }
+
+    .experience-wrap { margin-top: 1.5rem; }
+    .experience-wrap h4 { margin: 0 0 0.75rem 0; color: var(--fg); }
+    .experience-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .experience-table thead th {
+      text-align: left;
+      padding: 1rem 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+    }
+    .experience-table tbody td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--fg);
+    }
+    .experience-table tbody tr:last-child td { border-bottom: none; }
+    .experience-table tbody tr:hover td {
+      background: linear-gradient(90deg, rgba(0,87,184,0.03), rgba(0,0,0,0.01));
+    }
+
+    @media (max-width: 920px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .map-card { height: 260px; }
     }
     @media (max-width: 720px) {
-      main {
-        margin: 1rem auto;
-      }
-      .gallery {
-        grid-template-columns: 1fr;
-      }
-      .card {
-        margin-bottom: 1rem;
-      }
+      main { margin: 1rem auto; }
+      .gallery { grid-template-columns: 1fr; }
+      header .top-row { flex-direction: column; gap: 0.6rem; align-items: flex-start; }
+      header h1 { font-size: 1.4rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .profile-card { justify-self: start; }
+      .profile-card img { width: 120px; height: 120px; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Felix</h1>
-    <p>Hallo! Ich bin Felix, Geoinformatik-Student mit Begeisterung für Karten, Daten und die Schnittstelle von Technologie und Umwelt. Mein Weg führt mich durch spannende Projekte und Orte – hier findest du einen kleinen Einblick.</p>
-    <p>In meiner Freizeit bin ich gerne draußen unterwegs, fotografiere und entdecke neue Perspektiven. Diese Seite zeigt meine Stationen, Interessen und Links zu meinen Projekten.</p>
+    <div class="top-row">
+      <div>
+        <h1>Felix</h1>
+        <p class="small">Hallo! Ich bin Felix, Geoinformatik-Student mit Begeisterung für Karten, Daten und die Schnittstelle von Technologie und Umwelt.</p>
+      </div>
+      <div>
+        <button id="theme-toggle" aria-pressed="false" title="Theme wechseln" aria-label="Theme wechseln">
+          <!-- simple sun/moon icon + label -->
+          <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle></svg>
+          <span class="sr-only">Theme</span>
+        </button>
+      </div>
+    </div>
+    <p style="margin-top:0.6rem; color:var(--muted);">In meiner Freizeit bin ich gerne draußen unterwegs, fotografiere und entdecke neue Perspektiven. Diese Seite zeigt meine Stationen, Interessen und Links zu meinen Projekten.</p>
   </header>
   <main>
     <section>
@@ -201,6 +342,94 @@
         </tbody>
       </table>
     </section>
+
+    <section class="tabs" aria-label="Inhalte">
+      <div class="tab-list" role="tablist" aria-label="Abschnitte">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="panel-map" id="tab-map">About</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-projects" id="tab-projects">News</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-links" id="tab-links">Projects</button>
+      </div>
+      <div class="tab-panels">
+        <div id="panel-map" class="tab-panel" role="tabpanel" aria-labelledby="tab-map" aria-hidden="false">
+          <div class="about-grid">
+            <div class="about-text">
+              <h3>Welcome</h3>
+              <p>Welcome to my personal page! I am passionate about WebGIS and teaching. Currently I am involved in projects related to geospatial technologies and education.</p>
+              <p>I enjoy fieldwork, photography and exploring how data and maps can help us understand places better. Below you can find a short overview of my experience.</p>
+            </div>
+            <aside class="profile-card" aria-hidden="false">
+              <img src="Natur.jpg" alt="Portrait" />
+            </aside>
+          </div>
+
+          <div class="experience-wrap">
+            <h4>My experience</h4>
+            <table class="experience-table" aria-label="Erfahrungstabelle">
+              <thead>
+                <tr>
+                  <th style="width:22%">Year</th>
+                  <th style="width:38%">Position</th>
+                  <th style="width:40%">Institution</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2023 - Present</td>
+                  <td>Lecturer</td>
+                  <td>University of Applied Sciences Mainz</td>
+                </tr>
+                <tr>
+                  <td>2020 - 2023</td>
+                  <td>Researcher</td>
+                  <td>XYZ Institute</td>
+                </tr>
+                <tr>
+                  <td>2018 - 2020</td>
+                  <td>GIS Analyst</td>
+                  <td>ABC Company</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="panel-projects" class="tab-panel" role="tabpanel" aria-labelledby="tab-projects" aria-hidden="true">
+          <div class="gallery">
+            <div class="card">
+              <a href="https://github.com/Felix6375" target="_blank" rel="noopener" aria-label="Zu meinem GitHub-Profil">
+                <img src="assets/github.png" alt="GitHub Logo" />
+                <h3>GitHub</h3>
+                <p>Meine Projekte und Beiträge im Überblick.</p>
+              </a>
+            </div>
+            <div class="card">
+              <a href="https://portfolio.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Portfolio">
+                <img src="assets/portfolio.png" alt="Portfolio Icon" />
+                <h3>Portfolio</h3>
+                <p>Ausgewählte Arbeiten und kreative Projekte.</p>
+              </a>
+            </div>
+            <div class="card">
+              <a href="https://photoblog.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Fotoblog">
+                <img src="assets/photo-blog.png" alt="Fotoblog Icon" />
+                <h3>Fotoblog</h3>
+                <p>Fotografie und Abenteuer aus meiner Sicht.</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div id="panel-links" class="tab-panel" role="tabpanel" aria-labelledby="tab-links" aria-hidden="true">
+          <div class="card" style="text-align:left;">
+            <h3 style="margin-top:0;">Schnelllinks</h3>
+            <ul>
+              <li><a href="#">CV herunterladen</a></li>
+              <li><a href="#">Kontakt</a></li>
+              <li><a href="#">Datenschutz</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section>
       <h2>Über mich</h2>
       <figure>
@@ -208,30 +437,62 @@
         <figcaption>Felix unterwegs – Inspiration finde ich draußen.</figcaption>
       </figure>
     </section>
-    <section>
-      <h2>Galerie</h2>
-      <div class="gallery">
-        <div class="card">
-          <a href="https://github.com/Felix6375" target="_blank" rel="noopener" aria-label="Zu meinem GitHub-Profil">
-            <img src="assets/github.png" alt="GitHub Logo" />
-            <h3>GitHub</h3>
-            <p>Meine Projekte und Beiträge im Überblick.</p>
-          </a>
-        </div>
-        <div class="card">
-          <a href="https://portfolio.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Portfolio">
-            <img src="assets/portfolio.png" alt="Portfolio Icon" />
-            <h3>Portfolio</h3>
-            <p>Ausgewählte Arbeiten und kreative Projekte.</p>
-          </a>
-        </div>
-        <div class="card">
-          <a href="https://photoblog.felix6375.com" target="_blank" rel="noopener" aria-label="Zu meinem Fotoblog">
-            <img src="assets/photo-blog.png" alt="Fotoblog Icon" />
-            <h3>Fotoblog</h3>
-            <p>Fotografie und Abenteuer aus meiner Sicht.</p>
-          </a>
-        </div>
-      </div>
-    </section>
+
   </main>
+
+  <script>
+    // Theme toggle: speichere Präferenz in localStorage und setze data-theme auf body
+    (function(){
+      const btn = document.getElementById('theme-toggle');
+      const icon = document.getElementById('theme-icon');
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const getInitial = () => stored || (prefersDark ? 'dark' : 'light');
+      const setTheme = (t) => {
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+        btn.setAttribute('aria-pressed', String(t === 'dark'));
+        localStorage.setItem('theme', t);
+        // update icon (sun/moon)
+        if(t === 'dark'){
+          icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+        } else {
+          icon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+        }
+      };
+      // init
+      setTheme(getInitial());
+      btn.addEventListener('click', ()=>{
+        const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        setTheme(cur === 'dark' ? 'light' : 'dark');
+      });
+    })();
+
+    // Tabs: einfache, zugängliche Steuerung inkl. Tastatur (Pfeil links/rechts, Home/End)
+    (function(){
+      const tabs = Array.from(document.querySelectorAll('.tab'));
+      const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+      const select = (index) => {
+        tabs.forEach((t,i)=>{
+          const selected = i===index;
+          t.setAttribute('aria-selected', String(selected));
+          panels[i].setAttribute('aria-hidden', String(!selected));
+        });
+      };
+      tabs.forEach((tab, idx)=>{
+        tab.addEventListener('click', ()=> select(idx));
+        tab.addEventListener('keydown', (e)=>{
+          const key = e.key;
+          let next = null;
+          if(key === 'ArrowRight') next = (idx+1)%tabs.length;
+          if(key === 'ArrowLeft') next = (idx-1+tabs.length)%tabs.length;
+          if(key === 'Home') next = 0;
+          if(key === 'End') next = tabs.length-1;
+          if(next !== null){ e.preventDefault(); tabs[next].focus(); select(next); }
+        });
+      });
+      // initialise indicator position (if you want visual indicator later)
+      select(0);
+    })();
+  </script>
+</body>
+</html>
