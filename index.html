@@ -405,9 +405,12 @@
         </div>
         <div id="panel-links" class="tab-panel" role="tabpanel" aria-labelledby="tab-links" aria-hidden="true">
           <div class="projects-grid">
-            <div class="project-card"><div id="map1" class="map-container"></div></div>
-            <div class="project-card"><div id="map2" class="map-container"></div></div>
-            <div class="project-card"><div id="map3" class="map-container"></div></div>
+            <div class="project-card">
++              <iframe id="folium-base" class="map-iframe" data-src="map_1_basiskarte.html" title="Basiskarte" frameborder="0" loading="lazy" aria-label="Basiskarte"></iframe>
++            </div>
++            <div class="project-card">
++              <iframe id="folium-punkte" class="map-iframe" data-src="map_2_punkte.html" title="Punktekarte" frameborder="0" loading="lazy" aria-label="Punktekarte"></iframe>
++            </div>
           </div>
         </div>
       </div>
