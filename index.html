@@ -264,6 +264,7 @@
       .projects-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 720px) {
+      .projects-grid { grid-template-columns: 1fr; }
       main { margin: 1rem auto; }
       .gallery { grid-template-columns: 1fr; }
       header .top-row { flex-direction: column; gap: 0.6rem; align-items: flex-start; }
@@ -276,7 +277,7 @@
     /* Projects grid (3 maps) */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr); /* 2 columns -> 2x2 layout */
       gap: 1rem;
       margin-top: 1rem;
     }
