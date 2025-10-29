@@ -422,6 +422,9 @@
             <div class="project-card">
               <iframe id="folium-route" class="map-iframe" data-src="map_3_reiseroute.html" title="Reiseroute" frameborder="0" loading="lazy" aria-label="Reiseroute"></iframe>
             </div>
+            <div class="project-card">
+              <iframe id="folium-flaechen" class="map-iframe" data-src="map_4_flaechen_online.html" title="Flächen (online)" frameborder="0" loading="lazy" aria-label="Flächenkarte"></iframe>
+            </div>
           </div>
         </div>
       </div>
@@ -493,7 +496,8 @@
       const iframes = [
         document.getElementById('folium-base'),
         document.getElementById('folium-punkte'),
-        document.getElementById('folium-route')
+        document.getElementById('folium-route'),
+        document.getElementById('folium-flaechen')
       ].filter(Boolean);
       let loaded = false;
       function loadIframes(){
