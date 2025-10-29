@@ -141,5 +141,64 @@
     
             tile_layer_95881210f699bf9ae66d0f4b67c39053.addTo(map_b56da269bab7a96312829630bc94a089);
         
+    
+            tile_layer_c5482bf8ff4b6c4abf24393df8c64521.addTo(map_b56da269bab7a96312829630bc94a089);
+        
+    
+            tile_layer_95881210f699bf9ae66d0f4b67c39053.addTo(map_b56da269bab7a96312829630bc94a089);
+            
+            // --- Hervorhebung: einfache Länder-Polygone ---
+            (function(){
+                // vereinfachte Umrisse (sehr grobe Approximation) als [lat, lon] Arrays
+                var countryShapes = [
+                    {
+                        name: 'Deutschland',
+                        color: '#ffcc00',
+                        coords: [
+                            [55.0, 8.0], [54.0, 13.0], [52.0, 14.5], [50.5, 13.8], [50.0, 8.0], [51.5, 6.0], [54.0, 7.0]
+                        ]
+                    },
+                    {
+                        name: 'Frankreich',
+                        color: '#66c2a5',
+                        coords: [
+                            [51.0, 2.0], [48.5, 2.5], [46.0, 2.0], [44.0, 3.5], [43.0, 0.0], [46.0, -1.5], [49.0, -1.0]
+                        ]
+                    },
+                    {
+                        name: 'Italien',
+                        color: '#fc8d62',
+                        coords: [
+                            [47.5, 9.0], [45.5, 10.5], [44.0, 12.5], [43.0, 12.5], [42.0, 12.5], [43.5, 10.0], [47.0, 9.0]
+                        ]
+                    },
+                    {
+                        name: 'Spanien',
+                        color: '#8da0cb',
+                        coords: [
+                            [43.5, -3.0], [40.5, -3.5], [37.0, -3.5], [37.5, -0.5], [40.0, -0.5], [43.0, -1.5]
+                        ]
+                    }
+                ];
+
+                var grp = L.featureGroup().addTo(map_b56da269bab7a96312829630bc94a089);
+
+                countryShapes.forEach(function(c){
+                    var poly = L.polygon(c.coords, {
+                        color: c.color,
+                        weight: 2,
+                        opacity: 0.9,
+                        fillColor: c.color,
+                        fillOpacity: 0.35,
+                        smoothFactor: 1
+                    }).addTo(map_b56da269bab7a96312829630bc94a089);
+                    poly.bindPopup('<strong>' + c.name + '</strong>');
+                    grp.addLayer(poly);
+                });
+
+                // fit to displayed polygons with small padding
+                try{ map_b56da269bab7a96312829630bc94a089.fitBounds(grp.getBounds(), {padding: [20,20]}); }catch(e){ console.warn('fitBounds polygons', e); }
+            })();
+
 </script>
 </html>
