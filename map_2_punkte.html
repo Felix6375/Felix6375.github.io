@@ -123,5 +123,43 @@
     
             tile_layer_023943086b2d6bc87aceb1b71bac57d0.addTo(map_055aefbc273556a604b59bc98a3e2932);
         
+
+            // --- Beispielhafte Punkte hinzufügen ---
+            (function(){
+                var punkte = [
+                    ["Berlin, DE", [52.52, 13.405], "blue", "city", "<strong>Berlin</strong><br/>Hauptstadt Deutschlands"],
+                    ["Paris, FR", [48.8566, 2.3522], "green", "landmark", "<strong>Paris</strong><br/>Stadt der Liebe"],
+                    ["London, UK", [51.5074, -0.1278], "red", "globe", "<strong>London</strong><br/>Großstadt"],
+                    ["Rome, IT", [41.9028, 12.4964], "purple", "archway", "<strong>Rom</strong><br/>Kolossale Geschichte"],
+                    ["Madrid, ES", [40.4168, -3.7038], "orange", "star", "<strong>Madrid</strong><br/>Hauptstadt Spaniens"]
+                ];
+
+                var bounds = [];
+                punkte.forEach(function(it){
+                    var titel = it[0];
+                    var latlon = it[1];
+                    var farbe = it[2];
+                    var iconName = it[3];
+                    var html = it[4];
+
+                    // create awesome marker icon (falls leaflet.awesome-markers geladen ist)
+                    var markerIcon = null;
+                    try{
+                        markerIcon = L.AwesomeMarkers && L.AwesomeMarkers.icon({ icon: iconName, prefix: 'fa', markerColor: farbe });
+                    }catch(e){ markerIcon = null; }
+
+                    var markerOptions = {};
+                    if(markerIcon) markerOptions.icon = markerIcon;
+
+                    var marker = L.marker(latlon, markerOptions).addTo(map_055aefbc273556a604b59bc98a3e2932);
+                    if(html) marker.bindPopup(html);
+                    bounds.push(latlon);
+                });
+
+                if(bounds.length){
+                    map_055aefbc273556a604b59bc98a3e2932.fitBounds(bounds, {padding: [20,20]});
+                }
+            })();
+
 </script>
 </html>
