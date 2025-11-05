@@ -426,6 +426,9 @@
             <div class="project-card">
               <iframe id="folium-flaechen" class="map-iframe" data-src="map_4_flaechen_online.html" title="Flächen (online)" frameborder="0" loading="lazy" aria-label="Flächenkarte"></iframe>
             </div>
+            <div class="project-card">
+              <iframe id="folium-3d" class="map-iframe" data-src="map_5_3d.html" title="3D Gelände" frameborder="0" loading="lazy" aria-label="3D Karte"></iframe>
+            </div>
           </div>
         </div>
       </div>
@@ -498,7 +501,8 @@
         document.getElementById('folium-base'),
         document.getElementById('folium-punkte'),
         document.getElementById('folium-route'),
-        document.getElementById('folium-flaechen')
+        document.getElementById('folium-flaechen'),
+        document.getElementById('folium-3d')
       ].filter(Boolean);
       let loaded = false;
       function loadIframes(){
