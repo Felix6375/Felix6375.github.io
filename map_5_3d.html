@@ -55,16 +55,47 @@
                             });
 
     // <!--Gelaende ergaenzen --> 
-     window.startup = async function (Cesium) {
-           'use strict';
-           try {
-                 const terr = await Cesium.CesiumTerrainProvider.fromUrl("https://sgx.geodatenzentrum.de/gdz_basemapde_3d_gelaende/dgm5_4326_mesh/")
-		 viewer.terrainProvider=terr;
+      window.startup = async function (Cesium) {
+            'use strict';
+            try {
+                // create terrain provider (use CesiumTerrainProvider)
+                const terr = new Cesium.CesiumTerrainProvider({
+                    url: 'https://sgx.geodatenzentrum.de/gdz_basemapde_3d_gelaende/dgm5_4326_mesh/'
+                });
+                // assign terrain provider to viewer
+                viewer.terrainProvider = terr;
+                // enable depth testing against terrain so primitives appear correctly
+                viewer.scene.globe.depthTestAgainstTerrain = true;
+                // enable realistic lighting/shadows on globe
+                viewer.scene.globe.enableLighting = true;
+                // small UX improvements
+                viewer.scene.screenSpaceCameraController.enableTilt = true;
+                viewer.scene.screenSpaceCameraController.enableTranslate = true;
+             }
+            catch (error) {
+                 console.error(`Error creating tileset: ${error}`);
                }
-           catch (error) {
-                console.error(`Error creating tileset: ${error}`);
-              }
-     };
+            // --- Beispiel: extrudiertes Polygon (zeigt 3D-Effekt) ---
+            try{
+                const area = viewer.entities.add({
+                    name: 'Beispiel extrudierte Fläche',
+                    polygon: {
+                        hierarchy: Cesium.Cartesian3.fromDegreesArray([
+                            10.0, 47.5,
+                            10.5, 47.5,
+                            10.5, 47.0,
+                            10.0, 47.0
+                        ]),
+                        extrudedHeight: 2000,
+                        material: Cesium.Color.ORANGE.withAlpha(0.6),
+                        outline: true,
+                        outlineColor: Cesium.Color.BLACK
+                    }
+                });
+                // zoom to the extruded polygon
+                await viewer.zoomTo(area);
+            }catch(e){ console.warn('Adding example polygon failed', e); }
+       };
 
     // <!-- Beim Aufruf der Anwendung das Gelaende laden-->
      if (typeof Cesium !== 'undefined') {
